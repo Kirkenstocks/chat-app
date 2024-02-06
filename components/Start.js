@@ -7,6 +7,7 @@ const Start = ({ navigation }) => {
   const [name, setName] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('');
 
+  // color options to set background color
   const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
 
   return (
@@ -20,6 +21,8 @@ const Start = ({ navigation }) => {
             Chat App
         </Text>
         <View style={styles.inputContainer}>
+          {/* Need to add silhouette icon to input box */}
+          {/* Input for user to enter name */}
           <TextInput 
             style={styles.nameInput}
             value={name}
@@ -32,6 +35,7 @@ const Start = ({ navigation }) => {
               Choose Background Color:
             </Text>
             <View style={styles.colorContainer}>
+              {/* renders buttons for user to select background color */}
               {colors.map((color, index) => (
                 <TouchableOpacity
                   key={index}
@@ -41,6 +45,7 @@ const Start = ({ navigation }) => {
               ))}
             </View>
           </View>
+          {/* Button navigates to chat and passes props to Chat screen */}
           <TouchableOpacity 
             style={styles.button} 
             onPress={() => navigation.navigate('Chat', { name: name, backgroundColor: backgroundColor })}
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 2,
     opacity: 0.7
-}
- });
+  }
+});
 
 export default Start;

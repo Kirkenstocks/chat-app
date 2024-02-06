@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 const Chat = ({ route, navigation }) => {
+  // Name and background color passed in here
   const { name, backgroundColor } = route.params;
 
   useEffect(() => {

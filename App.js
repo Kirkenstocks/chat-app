@@ -4,6 +4,7 @@ import Chat from './components/Chat';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// initializing stack navigation
 const Stack = createNativeStackNavigator();
 
 export default function App() {
