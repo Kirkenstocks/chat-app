@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  ImageBackground, 
+  TextInput, 
+  TouchableOpacity, 
+  Platform, 
+  KeyboardAvoidingView 
+} from 'react-native';
 
 const backgroundImage = require('../assets/background-image.png');
 
@@ -54,6 +63,8 @@ const Start = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ImageBackground>
+      {/* Prevents keyboard from blocking name input box on ios while typing */}
+      { Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
     </View>
   );
 }
