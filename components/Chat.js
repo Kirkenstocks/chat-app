@@ -1,43 +1,38 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Platform, KeyboardAvoidingView, View } from 'react-native';
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   const [messages, setMessages] = useState([]);
 
-  // passing name and background props to chat screen
-  const { name, backgroundColor } = route.params;
+  // passing name, ID, and background props to chat screen
+  const { userID, name, backgroundColor } = route.params;
 
+  // retrieves messages from the db and updates message state
   useEffect(() => {
-    navigation.setOptions({ title: name })
+    navigation.setOptions({ title: name });
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+    const unsubMessages = onSnapshot(q, (docs) => {
+      let newMessages = [];
+      docs.forEach(doc => {
+        newMessages.push({ 
+          id: doc.id, 
+          ...doc.data(),
+          createdAt: new Date(doc.data().createdAt.toMillis())
+        })
+      })
+      setMessages(newMessages);
+    })
+    // clean up code
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
   }, []);
 
-  // updates message state
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer!",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-      
-        },
-      },
-      {
-        _id: 2,
-        text: "You have entered the chat",
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
-  }, []);
-
-  // handles message sending
+  // adds messages to the db
   const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+    addDoc(collection(db, 'messages'), newMessages[0]);
   }
 
   //renders and customizes message bubbles
@@ -60,9 +55,10 @@ const Chat = ({ route, navigation }) => {
       <GiftedChat 
         messages={messages}
         renderBubble={renderBubble}
-        onSend={messages => onSend(messages)}
+        onSend={newMessage => onSend(newMessage)}
         user={{
-          _id: 1
+          _id: userID,
+          name: name
         }}
       />
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
