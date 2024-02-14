@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { 
-  StyleSheet, Text, View, ImageBackground, TextInput, 
+  StyleSheet, Text, View, ImageBackground, TextInput,
   TouchableOpacity, Platform, KeyboardAvoidingView, Alert 
 } from 'react-native';
 import { getAuth, signInAnonymously } from "firebase/auth";
@@ -38,9 +38,11 @@ const Start = ({ navigation }) => {
             Chat App
         </Text>
         <View style={styles.inputContainer}>
-          {/* Need to add silhouette icon to input box */}
           {/* Input for user to enter name */}
-          <TextInput 
+          <TextInput
+            accessible={true}
+            accessibilityLabel='Username input' 
+            accessibilityHint='Enter your username here'
             style={styles.nameInput}
             value={name}
             onChangeText={setName}
@@ -55,6 +57,10 @@ const Start = ({ navigation }) => {
               {/* renders buttons for user to select background color */}
               {colors.map((color, index) => (
                 <TouchableOpacity
+                  accessible={true}
+                  accessbilityLabel='Optional background color selection'
+                  accessibilityHint='Choose a background color for your chat screen, optional'
+                  accessibilityRole='button'
                   key={index}
                   style={[styles.colorButtons, { backgroundColor: color }, color === backgroundColor ? styles.selectedColor : null ]}
                   onPress={() => setBackgroundColor(color)}
@@ -64,6 +70,10 @@ const Start = ({ navigation }) => {
           </View>
           {/* Button navigates to chat and passes props to Chat screen */}
           <TouchableOpacity 
+            accessible={true}
+            accessbilityLabel='Sign in'
+            accessibilityHint='Signs you in anonymously'
+            accessibilityRole='button'
             style={styles.button} 
             onPress={signInUser}
           >
@@ -118,10 +128,10 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 2,
     borderColor: '#757083',
-    marginTop: 15,
     fontSize: 16,
     fontWeight: '300',
-    opacity: 0.5
+    opacity: 0.5, 
+    marginTop: 15
   },
   button: {
     backgroundColor: '#757083',
