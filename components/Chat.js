@@ -3,8 +3,10 @@ import { StyleSheet, Platform, KeyboardAvoidingView, View } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
-const Chat = ({ route, navigation, isConnected, db }) => {
+const Chat = ({ route, navigation, isConnected, db, storage }) => {
   const [messages, setMessages] = useState([]);
 
   // passing name, ID, and background props to chat screen
@@ -76,9 +78,40 @@ const Chat = ({ route, navigation, isConnected, db }) => {
     />
   }
 
+  // renders text input if active connection, hides input if no connection
   const renderInputToolbar = (props) => {
     if (isConnected === true) {
       return <InputToolbar {...props} />;
+    } else return null;
+  }
+
+  const renderCustomActions = (props) => {
+    return <CustomActions 
+      storage={storage}
+      userID={userID} 
+      {...props} />;
+  }
+
+  // renders location in MapView when shared by user
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView 
+          style={{
+            width: 150,
+            height: 100,
+            borderRadius: 13,
+            margin: 3
+          }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+        />
+      );
     } else return null;
   }
 
@@ -88,6 +121,8 @@ const Chat = ({ route, navigation, isConnected, db }) => {
         messages={messages}
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolbar}
+        renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
         onSend={newMessage => onSend(newMessage)}
         user={{
           _id: userID,
@@ -96,7 +131,6 @@ const Chat = ({ route, navigation, isConnected, db }) => {
       />
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
     </View>
-   
  );
 }
 
