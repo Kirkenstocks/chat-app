@@ -5,13 +5,13 @@ The Chat App is a mobile chat app built in React Native that allows users to sen
 
 ### How to use:
 - Clone the repository onto your computer.
-- Install [Node.js] (https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) on your device. Once installed, open your terminal and run the command `nvm use 16.19.0` to set the Node version to be compatible with Expo.
+- Install Node.js (https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) on your device. Once installed, open your terminal and run the command `nvm use 16.19.0` to set the Node version to be compatible with Expo.
 - Setup Expo Go
   - Install the Expo CLI globally on your device by running the command `npm install -g expo-cli` in your terminal.
-  - Download the [Expo Go] (https://expo.dev/expo-go) app on the mobile device where you plan to run the app.
+  - Download the Expo Go (https://expo.dev/expo-go) app on the mobile device where you plan to run the app.
   - Log in to Expo Go or sign up if you don't have an account.
 - Setup a database on Google Firebase and connect to the locally hosted app
-  - Go to [Google Firebase] (https://firebase.google.com/) and log in with your Google account.
+  - Go to Google Firebase (https://firebase.google.com/) and log in with your Google account.
   - Create a new project in whatever region you choose.
   - Open the project and select "Firestore Database" from the Build tab on the left of the menu, then select "Create Database". Select the "Start in production mode" option.
   - Go to the "Rules" tab and change `allow read, write: if false;` to `allow read, write: if true;`, then publish the change. This will allow the app to read from and write to the database.
