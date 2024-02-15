@@ -12,12 +12,16 @@ The Chat App is a mobile chat app built in React Native that allows users to sen
   - Log in to Expo Go or sign up if you don't have an account.
 - Setup a database on Google Firebase and connect to the locally hosted app
   - Go to [Google Firebase](https://firebase.google.com/) and log in with your Google account.
-  - Create a new project in whatever region you choose.
-  - Open the project and select "Firestore Database" from the Build tab on the left of the menu, then select "Create Database". Select the "Start in production mode" option.
+  - Create a new project.
+  - Open the project and select "Firestore Database" from the Build tab on the left of the menu, then select "Create Database" and choose any region you want. Select the "Start in production mode" option.
   - Go to the "Rules" tab and change `allow read, write: if false;` to `allow read, write: if true;`, then publish the change. This will allow the app to read from and write to the database.
   - Navigate to the "Project Overview" and register the app as a web app.
   - Navigate to "Project Settings" by clicking the gear icon next to "Project Overview". In the section titled "SDK setup and configuration" copy the text in `const firebaseConfig = {...};`.
   - Open the Chat App repository you cloned earlier in your IDE, open App.js, and replace the code found in the firebaseConfig variable with your own.
+- Setup anonymous user authorization in Google Firebase
+  - Select "Authentication" from the "Build" tab in your Firebase console.
+  - In the "Sign-in Providers" section enable the anonymous sign-in method provider. 
+- Navigate to the root directory of the project in your terminal and run `npm install` to install project dependencies.
 - Run the terminal command `npx expo start` in the root directory of the project and open Expo Go on your mobile device. Log in to Expo Go if you haven't already, and select the server you just started.
 
 
