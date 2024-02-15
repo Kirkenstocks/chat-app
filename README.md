@@ -1,7 +1,7 @@
 # Chat App
 
 ### Description:
-The Chat App is a mobile chat app built in React Native that allows users to send messages in a group chat room and share images or their location. 
+The Chat App is a simple mobile chat app built in React Native that allows users to send messages in a group chat room and share images or their location. 
 
 ### How to use:
 - Clone the repository onto your computer.
